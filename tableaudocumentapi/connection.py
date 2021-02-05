@@ -17,6 +17,7 @@ class Connection(object):
         self._username = connxml.get('username')
         self._authentication = connxml.get('authentication')
         self._warehouse = connxml.get('warehouse')
+        self._service = onnxml.get('service')
         self._class = connxml.get('class')
         self._port = connxml.get('port', None)
         self._query_band = connxml.get('query-band-spec', None)
@@ -27,7 +28,7 @@ class Connection(object):
 
     @classmethod
     def from_attributes(cls, server, dbname, username, dbclass, port=None, query_band=None,
-                        initial_sql=None, authentication='', warehouse=None):
+                        initial_sql=None, authentication='', warehouse=None, service=None):
         """Creates a new connection that can be added into a Data Source.
         defaults to `''` which will be treated as 'prompt' by Tableau."""
 
@@ -41,6 +42,7 @@ class Connection(object):
         xml.query_band = query_band
         xml.initial_sql = initial_sql
         xml.warehouse = warehouse
+        xml.service = service
 
         return xml
 
@@ -83,6 +85,29 @@ class Connection(object):
         """
         self._warehouse = value
         self._connectionXML.set('warehouse', value)
+        
+        
+    @property
+    def service(self):
+        """Database role service for the connection. Not the table name."""
+        return self._service       
+        
+    
+    @service.setter
+    def service(self, value):
+        """
+        Set the connection's sercie name property.
+
+        Args:
+            value:  New name of the service. String.
+
+        Returns:
+            Nothing.
+
+        """
+        self._service = value
+        self._connectionXML.set('service', value)
+        
 
     @property
     def server(self):
