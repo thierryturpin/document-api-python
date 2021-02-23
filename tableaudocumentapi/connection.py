@@ -1,8 +1,16 @@
 import xml.etree.ElementTree as ET
 from tableaudocumentapi.dbclass import is_valid_dbclass
+from functools import wraps
 
-def string_to_bool(s):
-    return s.lower() == 'true'
+def property_is_boolean(func):
+    @wraps(func)
+    def wrapper(self, value):
+        if not isinstance(value, bool):
+            error = "Boolean expected for {0} flag.".format(func.__name__)
+            raise ValueError(error)
+        return func(self, value)
+
+    return wrapper
 
 
 class Connection(object):
@@ -32,7 +40,7 @@ class Connection(object):
         return "'<Connection server='{}' dbname='{}' @ {}>'".format(self._server, self._dbname, hex(id(self)))
 
     @classmethod
-    def from_attributes(cls, server, dbname, username, dbclass, password=None, embed_password=None, port=None, query_band=None,
+    def from_attributes(cls, server, dbname, username, dbclass, password=None, embed_password=True, port=None, query_band=None,
                         initial_sql=None, authentication='', warehouse=None, service=None):
         """Creates a new connection that can be added into a Data Source.
         defaults to `''` which will be treated as 'prompt' by Tableau."""
@@ -182,6 +190,7 @@ class Connection(object):
         return self._embed_password
 
     @embed_password.setter
+    @property_is_boolean
     def embed_password(self, value):
         """
         Set the connection's embed_password property.
@@ -194,7 +203,7 @@ class Connection(object):
 
         """
         self._embed_password = value
-        self._connectionXML.set('embed_password', string_to_bool(value))
+        self._connectionXML.set('embed_password', value)
 
     @property
     def authentication(self):
