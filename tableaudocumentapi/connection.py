@@ -15,6 +15,7 @@ class Connection(object):
         self._dbname = connxml.get('dbname')
         self._server = connxml.get('server')
         self._username = connxml.get('username')
+        self._password = connxml.get('password')
         self._authentication = connxml.get('authentication')
         self._warehouse = connxml.get('warehouse')
         self._service = connxml.get('service')
@@ -148,6 +149,26 @@ class Connection(object):
         """
         self._username = value
         self._connectionXML.set('username', value)
+        
+    @property
+    def password(self):
+        """Password used to authenticate to the database."""
+        return self._password
+
+    @password.setter
+    def password(self, value):
+        """
+        Set the connection's password property.
+
+        Args:
+            value:  New password value. String.
+
+        Returns:
+            Nothing.
+
+        """
+        self._password = value
+        self._connectionXML.set('password', value)
 
     @property
     def authentication(self):
