@@ -1,6 +1,9 @@
 import xml.etree.ElementTree as ET
 from tableaudocumentapi.dbclass import is_valid_dbclass
 
+def string_to_bool(s):
+    return s.lower() == 'true'
+
 
 class Connection(object):
     """A class representing connections inside Data Sources."""
@@ -191,7 +194,7 @@ class Connection(object):
 
         """
         self._embed_password = value
-        self._connectionXML.set('embed_password', value)
+        self._connectionXML.set('embed_password', string_to_bool(value))
 
     @property
     def authentication(self):
