@@ -29,7 +29,7 @@ class Connection(object):
         return "'<Connection server='{}' dbname='{}' @ {}>'".format(self._server, self._dbname, hex(id(self)))
 
     @classmethod
-    def from_attributes(cls, server, dbname, username, dbclass, port=None, query_band=None,
+    def from_attributes(cls, server, dbname, username, dbclass, password=None, embed_password=None, port=None, query_band=None,
                         initial_sql=None, authentication='', warehouse=None, service=None):
         """Creates a new connection that can be added into a Data Source.
         defaults to `''` which will be treated as 'prompt' by Tableau."""
@@ -39,6 +39,8 @@ class Connection(object):
         xml.server = server
         xml.dbname = dbname
         xml.username = username
+        xml.password = password
+        xml.embed_password = embed_password
         xml.dbclass = dbclass
         xml.port = port
         xml.query_band = query_band
@@ -182,7 +184,7 @@ class Connection(object):
         Set the connection's embed_password property.
 
         Args:
-            value:  New embed_password value. String.
+            value:  New embed_password value. Bool.
 
         Returns:
             Nothing.
