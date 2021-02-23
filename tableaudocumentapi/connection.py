@@ -16,6 +16,7 @@ class Connection(object):
         self._server = connxml.get('server')
         self._username = connxml.get('username')
         self._password = connxml.get('password')
+        self._embed_password = connxml.get('embed_password')
         self._authentication = connxml.get('authentication')
         self._warehouse = connxml.get('warehouse')
         self._service = connxml.get('service')
@@ -169,6 +170,26 @@ class Connection(object):
         """
         self._password = value
         self._connectionXML.set('password', value)
+        
+    @property
+    def embed_password(self):
+        """Password used to authenticate is embedded."""
+        return self._embed_password
+
+    @embed_password.setter
+    def embed_password(self, value):
+        """
+        Set the connection's embed_password property.
+
+        Args:
+            value:  New embed_password value. String.
+
+        Returns:
+            Nothing.
+
+        """
+        self._embed_password = value
+        self._connectionXML.set('embed_password', value)
 
     @property
     def authentication(self):
