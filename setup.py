@@ -5,7 +5,7 @@ except ImportError:
 
 setup(
     name='tableaudocumentapi',
-    version='0.7',
+    version='0.8',
     author='Tableau',
     author_email='thierry@turpin.be',
     url='https://github.com/thierryturpin/document-api-python',
