@@ -10,5 +10,5 @@ setup(
     license='MIT',
     description='A Python module for working with Tableau files.',
     test_suite='test',
-    install_requires=['lxml', 'packing']
+    install_requires=['lxml', 'packaging']
 )
