@@ -1,11 +1,8 @@
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='tableaudocumentapi',
-    version='0.8',
+    version='0.8.1',
     author='Tableau',
     author_email='thierry@turpin.be',
     url='https://github.com/thierryturpin/document-api-python',
